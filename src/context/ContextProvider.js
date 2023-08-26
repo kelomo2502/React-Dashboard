@@ -8,10 +8,21 @@ const initialState = {
     notification:false
 }
 
-export const ContextProvider = ({children})=>{
+export const ContextProvider = 
+({children})=>{
+    const [isClicked, setIsClicked] = useState(initialState)
     const [activeMenu,setActiveMenu] = useState(true)
+    const handleClick=(clicked)=>{
+        setIsClicked({...initialState,[clicked]: true})
+    }
     return (
-        <StateContext.Provider value={{activeMenu, setActiveMenu}}>
+        <StateContext.Provider value={{
+        activeMenu, 
+        setActiveMenu, 
+        isClicked, 
+        setIsClicked,
+        handleClick
+        }}>
             {children}
         </StateContext.Provider>
     )

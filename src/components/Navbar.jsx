@@ -20,12 +20,64 @@ const NavButton =({title,customFunc,icon,color,dotColor})=>(
 )
 
 const Navbar = () => {
-  const {activeMenu, setActiveMenu} = useStateContext()
+  const {activeMenu, setActiveMenu, isClicked, SetIsClicked, handleClick} = useStateContext()
   return (
-    <div className='flex justify-between p-2 md:mx-6 relative'>
-    <NavButton title="Menu" customFunc={()=>{setActiveMenu((prevActiveMenu=>!prevActiveMenu))}} color="blue" icon={AiOutlineMenu} dotColor="red"/>
+    <div className="flex justify-between p-2 md:mx-6 relative">
+      <NavButton
+        title="Menu"
+        customFunc={() => {
+          setActiveMenu((prevActiveMenu) => !prevActiveMenu);
+        }}
+        color="blue"
+        icon={<AiOutlineMenu />}
+      />
+      <div className="flex">
+        <NavButton
+          title="Cart"
+          customFunc={() =>handleClick("cart")}
+          color="blue"
+          icon={<FiShoppingCart />}
+        />
+        <NavButton
+          title="Chat"
+          customFunc={() =>handleClick('chat')}
+          color="blue"
+          icon={<BsChatLeft />}
+          dotColor="#03c9d7"
+        />
+        <NavButton
+          title="Notifications"
+          customFunc={() =>handleClick('notification')}
+          color="blue"
+          icon={<RiNotification3Line />}
+          dotColor="#03c9d7"
+        />
+        <TooltipComponent content="Profile" position="BottomCenter">
+          <div
+            className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg"
+            onClick={() =>handleClick('userProfile')}
+          >
+            <img
+              src={avater}
+              alt="Profie-Image"
+              className="rounded-full w-8 h-8"
+            />
+            <p>
+              <span className="text-gray-400 text-14">Hi,</span>{" "}
+              <span className="text-gray-400 text-bold ml-1  text-14">
+                Gbenga
+              </span>
+            </p>
+            <MdKeyboardArrowDown className="text-gray-400 text-14" />
+          </div>
+        </TooltipComponent>
+        {isClicked.cart && <Cart />}
+        {isClicked.chat && <Chat />}
+        {isClicked.notification && <Notification />}
+        {isClicked.userProfile && <UserProfile />}
+      </div>
     </div>
-  )
+  );
 }
 
 export default Navbar
